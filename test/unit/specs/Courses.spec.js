@@ -84,51 +84,19 @@ describe('Courses.vue', () => {
   });
 
 
-  it('Can show mock data', () => {
+  it('Render page correctly', () => {
     // build component
     const Constructor = Vue.extend(Courses);
     const CoursesComponent = new Constructor().$mount();
 
     // set test data
-    CoursesComponent.courses = [
-      {
-        id:'999999',
-        name:'COMP BASED',
-        sections: [
-          {
-            id: '001',
-            teacher: [ 'Aj.To' ],
-            credit_lec: 3,
-            credit_lab: 0,
-            day: 'TuF',
-            time: [ '12.30-15.30' ],
-            room: ['AKB4801'],
-            seat: 35,
-            enrolled: 32,
-          },
-          {
-            id: '002',
-            teacher: [ 'Aj.To' , 'staff' ],
-            credit_lec: 3,
-            credit_lab: 0,
-            day: 'TuF',
-            time: [ '15.30-18.30' ],
-            room: ['AKB4801'],
-            seat: 35,
-            enrolled: 35,
-          }
-        ]
-      }
-    ];
 
     // assert & expected
-    expect(CoursesComponent.$el.textContent).to.contain('999999 - COMP BASED (2 Section)');
-    expect(CoursesComponent.$el.textContent).to.contain('Aj.To');
+    expect(CoursesComponent.$el.textContent).to.contain('012200 - MIND VOLUNTEER (2 Section)');
+    expect(CoursesComponent.$el.textContent).to.contain('Rapee Sangsakorn');
     expect(CoursesComponent.$el.textContent).to.contain('001');
     expect(CoursesComponent.$el.textContent).to.contain('002');
     expect(CoursesComponent.$el.textContent).to.contain('AKB4801');
-    expect(CoursesComponent.$el.textContent).to.contain('ADD');
-    expect(CoursesComponent.$el.textContent).to.contain('FULL');
   });
 
 })

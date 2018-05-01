@@ -61,60 +61,35 @@ export default {
   data (){
     return {
       errors: [],
-      courses: [
-        {
-          id:'012200',
-          name:'MIND VOLUNTEER',
-          sections: [
-            {
-              id: '001',
-              teacher: [ 'Rapee Sangsakorn' ],
-              credit_lec: 3,
-              credit_lab: 0,
-              day: 'TuF',
-              time: [ '12.30-15.30' ],
-              room: ['AKB4801'],
-              seat: 35,
-              enrolled: 32,
-            },
-            {
-              id: '002',
-              teacher: [ 'Rapee Sangsakorn' , 'staff' ],
-              credit_lec: 3,
-              credit_lab: 0,
-              day: 'TuF',
-              time: [ '15.30-18.30' ],
-              room: ['AKB4801'],
-              seat: 35,
-              enrolled: 35,
-            }
-          ]
-        },
-        {
-          id:'951100',
-          name:'MODERN LIFE AND ANIMATION',
-          sections: [
-            {
-              id: '001',
-              teacher: [ 'Rapee Sangsakorn' ],
-              credit_lec: 3,
-              credit_lab: 0,
-              day: 'TuF',
-              time: [ '12.30-15.30' ],
-              room: ['AKB4801'],
-              seat: 35,
-              enrolled: 35,
-            }
-          ]
-        },
-      ],
+      courses: [],
     }
   },
 
   methods: {
     add: function(course,section){
-      section.enrolled++;
-      console.log("ADD -> { course: " + course.id + ", section: " + section.id + " }");
+      var body = '{ course: ' + course.id + ', section: ' + section.id +' }';
+      console.log("ADD -> " + body);
+
+      axios.post(`/add`, {
+        body: body
+      })
+      .then(response => {
+        console.log(response);
+        section.enrolled++;
+      })
+      .catch(e => {
+        console.log(error);
+        this.errors.push(e);
+      })
+
+      // async / await version (created() becomes async created())
+      //
+      // try {
+      //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+      //   this.posts = response.data
+      // } catch (e) {
+      //   this.errors.push(e)
+      // }
     },
     isAvailable: function(section){
       if(section.seat - section.enrolled > 0) return true;
@@ -122,25 +97,26 @@ export default {
     },
   },
 
-  // created() {
-  //   axios.get(`/courses`)
-  //   .then(response => {
-  //     // JSON responses are automatically parsed.
-  //     this.courses = response.data;
-  //   })
-  //   .catch(e => {
-  //     this.errors.push(e);
-  //   })
+  created() {
+    axios.get(`http://localhost:3000/courses`)
+    .then(response => {
+      // JSON responses are automatically parsed.
+      this.courses = response.data;
+    })
+    .catch(e => {
+      this.errors.push(e);
+    })
 
-  // async / await version (created() becomes async created())
-  //
-  // try {
-  //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
-  //   this.posts = response.data
-  // } catch (e) {
-  //   this.errors.push(e)
-  // }
-  // }
+    // async / await version (created() becomes async created())
+    //
+    // try {
+    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+    //   this.posts = response.data
+    // } catch (e) {
+    //   this.errors.push(e)
+    // }
+    // }
+  }
 }
 </script>
 
