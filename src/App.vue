@@ -11,11 +11,12 @@
 <!-- <script src="./assets/js/uikit.js"></script>
 <script src="./assets/js/uikit-icons.js"></script> -->
 <script>
-require('./assets/js/uikit.js');
-require('./assets/js/uikit-icons.js');
-
 import Header from './components/Header'
 import Footer from './components/Footer'
+
+import UIkit from 'uikit';
+import Icons from 'uikit/dist/js/uikit-icons';
+UIkit.use(Icons);
 
 export default {
   name: 'app',

@@ -40,7 +40,7 @@
                     <td class="uk-text-center">{{ section.room }}</td>
                     <td class="uk-text-center">{{ section.seat }}</td>
                     <td class="uk-text-center"><span class="uk-label">{{ section.enrolled }}</span></td>
-                    <td class="uk-text-center" v-if="isAvailable(section)"><button class="uk-button add" type="button" v-on:click="add(course,section)">Add</button></td>
+                    <td class="uk-text-center" v-if="isAvailable(section)"><button class="uk-button add" type="button" v-on:click="onEnrollClicked(course,section)">Enroll</button></td>
                     <td class="uk-text-center" v-else><button class="uk-button" type="uk-button" disabled>Full</button></td>
                   </tr>
                 </tbody>
@@ -54,6 +54,10 @@
 </template>
 
 <script>
+import UIkit from 'uikit';
+import Icons from 'uikit/dist/js/uikit-icons';
+UIkit.use(Icons);
+
 import axios from 'axios';
 
 export default {
@@ -113,20 +117,35 @@ export default {
   },
 
   methods: {
-    add: function(course,section){
-      var body = '{ course: ' + course.id + ', section: ' + section.id +' }';
-      console.log("ADD -> " + body);
 
-      axios.post(`/add`, {
+    onEnrollClicked: function(course,section){
+      if(this.enroll(course,section)){
+        UIkit.notification({message: '<span uk-icon=\'icon: check\'></span> Enroll Success', status: 'success'});
+      }else{
+        UIkit.notification({message: 'This Course is already full', status: 'danger'});
+      }
+    },
+
+    enroll: function(course,section){
+      var body = '{ course: ' + course.id + ', section: ' + section.id +' }';
+      console.log("ENROLL -> " + body);
+
+      axios.post(`http://localhost:3000/add`, {
         body: body
       })
       .then(response => {
         console.log(response);
-        section.enrolled++;
+        console.log(response.status);
+        if (response.status == 201){
+          return true;
+        }else{
+          return false;
+        }
       })
       .catch(e => {
-        console.log(error);
+        console.log(e);
         this.errors.push(e);
+        return false;
       })
 
       // async / await version (created() becomes async created())
@@ -142,17 +161,45 @@ export default {
       if(section.seat - section.enrolled > 0) return true;
       return false;
     },
+
+    created: function() {
+      axios.get(`http://localhost:3000/courses`)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        console.log(response);
+        this.courses = response.data;
+        return true;
+      })
+      .catch(e => {
+        this.errors.push(e);
+        return false;
+      })
+
+      // async / await version (created() becomes async created())
+      //
+      // try {
+      //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+      //   this.posts = response.data
+      // } catch (e) {
+      //   this.errors.push(e)
+      // }
+      // }
+    }
   },
 
   created() {
-    axios.get(`http://localhost:3000/courses`)
-    .then(response => {
-      // JSON responses are automatically parsed.
-      this.courses = response.data;
-    })
-    .catch(e => {
-      this.errors.push(e);
-    })
+    this.created();
+    // axios.get(`http://localhost:3000/courses`)
+    // .then(response => {
+    //   // JSON responses are automatically parsed.
+    //   console.log(response);
+    //   this.courses = response.data;
+    //   return true;
+    // })
+    // .catch(e => {
+    //   this.errors.push(e);
+    //   return false;
+    // })
 
     // async / await version (created() becomes async created())
     //

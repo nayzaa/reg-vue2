@@ -6,7 +6,7 @@ describe('Courses.vue', () => {
   /* =====================================================================
   TEST CASE 01: Function: add() - can add up enrolled seat after added
   ===================================================================== */
-  it('Function: add() - can add up enrolled seat after added', () => {
+  it('Function: enroll() - pass if enroll() return true', () => {
     // build component
     const Constructor = Vue.extend(Courses);
     const CoursesComponent = new Constructor().$mount();
@@ -25,10 +25,9 @@ describe('Courses.vue', () => {
     ];
 
     // assert & expected
-    CoursesComponent.add(CoursesComponent.courses[0],CoursesComponent.courses[0].sections[0]);
-    var enrolled = CoursesComponent.courses[0].sections[0].enrolled;
+    var result = CoursesComponent.enroll(CoursesComponent.courses[0],CoursesComponent.courses[0].sections[0]);
 
-    assert.equal(enrolled,33);
+    assert.equal(result,true);
   });
 
   /* =====================================================================
@@ -84,6 +83,9 @@ describe('Courses.vue', () => {
   });
 
 
+  /* =====================================================================
+  TEST CASE 04: Render page correctly
+  ===================================================================== */
   it('Render page correctly', () => {
     // build component
     const Constructor = Vue.extend(Courses);
@@ -97,6 +99,20 @@ describe('Courses.vue', () => {
     expect(CoursesComponent.$el.textContent).to.contain('001');
     expect(CoursesComponent.$el.textContent).to.contain('002');
     expect(CoursesComponent.$el.textContent).to.contain('AKB4801');
+  });
+
+  /* =====================================================================
+  TEST CASE 05: Load data onCreate
+  ===================================================================== */
+  it('Load data onCreate', () => {
+    // build component
+    const Constructor = Vue.extend(Courses);
+    const CoursesComponent = new Constructor().$mount();
+
+    // set test data
+    var result = CoursesComponent.created();
+
+    // assert & expected
   });
 
 })
