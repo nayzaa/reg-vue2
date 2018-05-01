@@ -294,7 +294,22 @@ export default {
 
   methods: {
     withdraw: function(lecture,sections){
-  console.log("Withdraw -> { course: " + course.id + ", section: " + section.id + " }")
+
+      var body = '{ course: ' + sections.id + ', section: ' + sections.sec_id +' }';
+      console.log("Withdraw -> " + body);
+
+      axios.delete(`/withdraw`, {
+        body: body
+      })
+      .then(response => {
+        console.log(response);
+
+
+      })
+      .catch(e => {
+        console.log(error);
+        this.errors.push(e);
+      })
     }
   }
 }

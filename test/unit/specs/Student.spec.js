@@ -71,29 +71,37 @@ describe('Student.vue', () => {
 
   /* =====================================================================
   TEST CASE: Withdraw Courses
-  ===================================================================== */
+  ===================================================================== */0
 
-  it('Function: isAvailable() - 49/50 available return true', () => {
+  it('Function: withdraw return true', () => {
     // build component
-    const Constructor = Vue.extend(Courses);
-    const CoursesComponent = new Constructor().$mount();
+    const Constructor = Vue.extend(Student)
+    const StudentComponent = new Constructor().$mount();
 
     // set test data
-    CoursesComponent.courses = [
+    StudentComponent.lecture = [
       {
         sections: [
           {
-            seat: 50,
-            enrolled: 49,
+            id:'204100',
+            name:'IT AND MODERN LIFE',
+            sec_id: '701',
+            no: 1,
+            credit_lec: 2,
+            credit_lab: 1,
+            day: 'Tu',
+            time: [ '12.30-14.30' ],
+            room: ['RB6201'],
+            type: 'p',
           }
         ]
       }
     ];
 
     // assert & expected
-    var isAvailable = CoursesComponent.isAvailable(CoursesComponent.courses[0].sections[0]);
+    var withdraw = StudentComponent.withdraw(StudentComponent.lecture[0].sections[0]);
 
-    assert.equal(isAvailable,true);
+    assert.equal(withdraw,true);
   });
 
 
