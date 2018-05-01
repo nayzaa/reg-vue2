@@ -3,7 +3,7 @@ import Courses from '@/components/Fee'
 
 describe('Fee.vue', () => {
 
-  it('Can show mock data', () => {
+  it('Render page correctly', () => {
     // build component
     const Constructor = Vue.extend(Fee);
     const FeeComponent = new Constructor().$mount();
