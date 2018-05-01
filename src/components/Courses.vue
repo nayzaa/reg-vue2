@@ -61,7 +61,54 @@ export default {
   data (){
     return {
       errors: [],
-      courses: [],
+      // courses: this.loadData(),
+      courses: [
+        {
+          id:'012200',
+          name:'MIND VOLUNTEER',
+          sections: [
+            {
+              id: '001',
+              teacher: [ 'Rapee Sangsakorn' ],
+              credit_lec: 3,
+              credit_lab: 0,
+              day: 'TuF',
+              time: [ '12.30-15.30' ],
+              room: ['AKB4801'],
+              seat: 35,
+              enrolled: 32,
+            },
+            {
+              id: '002',
+              teacher: [ 'Rapee Sangsakorn' , 'staff' ],
+              credit_lec: 3,
+              credit_lab: 0,
+              day: 'TuF',
+              time: [ '15.30-18.30' ],
+              room: ['AKB4801'],
+              seat: 35,
+              enrolled: 35,
+            }
+          ]
+        },
+        {
+          id:'951100',
+          name:'MODERN LIFE AND ANIMATION',
+          sections: [
+            {
+              id: '001',
+              teacher: [ 'Rapee Sangsakorn' ],
+              credit_lec: 3,
+              credit_lab: 0,
+              day: 'TuF',
+              time: [ '12.30-15.30' ],
+              room: ['AKB4801'],
+              seat: 35,
+              enrolled: 35,
+            }
+          ]
+        },
+      ],
     }
   },
 
