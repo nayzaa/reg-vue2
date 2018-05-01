@@ -33,7 +33,7 @@ describe('Fee.vue', () => {
 
     // assert & expected
     expect(FeeComponent.$el.textContent).to.contain('Surasung Vunlai');
-    expect(FeeComponent.$el.textContent).to.contain('999999 - COMP BASED');
+    expect(FeeComponent.$el.textContent).to.contain('999999 - COMP TOP');
     expect(FeeComponent.$el.textContent).to.contain('3 credits');
     expect(FeeComponent.$el.textContent).to.contain('60');
     expect(FeeComponent.$el.textContent).to.contain('15');
