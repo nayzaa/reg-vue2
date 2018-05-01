@@ -8,7 +8,7 @@
     <div class="content box">
       <ul uk-accordion="multiple: true">
         <li v-for="course in courses">
-          <a class="uk-accordion-title" href="#">012200 - MIND VOLUNTEER (3 Section)</a>
+          <a class="uk-accordion-title" href="#">{{course.id}} - {{course.name}} ({{count(course.sections.length)}} Section)</a>
           <div class="uk-accordion-content">
             <div class="uk-overflow-auto">
               <table class="uk-table uk-table-justify uk-table-divider uk-table-striped">
@@ -40,7 +40,7 @@
                     <td class="uk-text-center">{{ section.room }}</td>
                     <td class="uk-text-center">{{ section.seat }}</td>
                     <td class="uk-text-center"><span class="uk-label">{{ section.enrolled }}</span></td>
-                    <td class="uk-text-center" v-if="available(section)"><button class="uk-button add" type="button" v-on:click="add(course,section)">Add</button></td>
+                    <td class="uk-text-center" v-if="isAvailable(section)"><button class="uk-button add" type="button" v-on:click="add(course,section)">Add</button></td>
                     <td class="uk-text-center" v-else><button class="uk-button" type="uk-button" disabled>Full</button></td>
                   </tr>
                 </tbody>
@@ -112,7 +112,7 @@ export default {
       section.enrolled++;
       console.log("ADD -> { course: " + course.id + ", section: " + section.id + " }")
     },
-    available: function(section){
+    isAvailable: function(section){
       if(section.seat - section.enrolled > 0) return true;
       return false;
     }
