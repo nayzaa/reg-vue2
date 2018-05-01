@@ -2,16 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import Router from './router'
-// import MockData from './mock/'
+import router from './router'
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  Router,
-  // MockData,
+  router,
   components: { App },
   template: '<App/>'
 })
