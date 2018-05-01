@@ -113,6 +113,7 @@ describe('Courses.vue', () => {
     var result = CoursesComponent.created();
 
     // assert & expected
+    assert.equal(result,true);
   });
 
 })
