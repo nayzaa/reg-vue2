@@ -61,6 +61,7 @@ export default {
   data (){
     return {
       errors: [],
+      // courses: this.loadData(),
       courses: [
         {
           id:'012200',
@@ -113,8 +114,29 @@ export default {
 
   methods: {
     add: function(course,section){
-      section.enrolled++;
-      console.log("ADD -> { course: " + course.id + ", section: " + section.id + " }");
+      var body = '{ course: ' + course.id + ', section: ' + section.id +' }';
+      console.log("ADD -> " + body);
+
+      axios.post(`/add`, {
+        body: body
+      })
+      .then(response => {
+        console.log(response);
+        section.enrolled++;
+      })
+      .catch(e => {
+        console.log(error);
+        this.errors.push(e);
+      })
+
+      // async / await version (created() becomes async created())
+      //
+      // try {
+      //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+      //   this.posts = response.data
+      // } catch (e) {
+      //   this.errors.push(e)
+      // }
     },
     isAvailable: function(section){
       if(section.seat - section.enrolled > 0) return true;
@@ -122,25 +144,26 @@ export default {
     },
   },
 
-  // created() {
-  //   axios.get(`/courses`)
-  //   .then(response => {
-  //     // JSON responses are automatically parsed.
-  //     this.courses = response.data;
-  //   })
-  //   .catch(e => {
-  //     this.errors.push(e);
-  //   })
+  created() {
+    axios.get(`http://localhost:3000/courses`)
+    .then(response => {
+      // JSON responses are automatically parsed.
+      this.courses = response.data;
+    })
+    .catch(e => {
+      this.errors.push(e);
+    })
 
-  // async / await version (created() becomes async created())
-  //
-  // try {
-  //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
-  //   this.posts = response.data
-  // } catch (e) {
-  //   this.errors.push(e)
-  // }
-  // }
+    // async / await version (created() becomes async created())
+    //
+    // try {
+    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+    //   this.posts = response.data
+    // } catch (e) {
+    //   this.errors.push(e)
+    // }
+    // }
+  }
 }
 </script>
 
