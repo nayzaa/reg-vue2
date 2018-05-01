@@ -294,9 +294,7 @@ export default {
 
   methods: {
     withdraw: function(lecture,sections){
-
-      
-      console.log("Withdraw -> { course: " + course.id + ", section: " + section.id + " }")
+  console.log("Withdraw -> { course: " + course.id + ", section: " + section.id + " }")
     }
   }
 }

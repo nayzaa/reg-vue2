@@ -3,7 +3,11 @@ import Student from '@/components/Student'
 
 describe('Student.vue', () => {
 
-  it('displays items from the list', () => {
+  /* =====================================================================
+  TEST CASE: Show Enrolled Courses
+  ===================================================================== */
+
+  it('Show enrolled course', () => {
     // our test goes here
 
     // build component
@@ -55,11 +59,42 @@ describe('Student.vue', () => {
     ];
 
     // assert that component text contains items from the list
-  //  StudentComponent.withdraw(StudentComponent.lecture[0],StudentComponent.lecture[0].sections[0]);
+    assert.equal(StudentComponent.lecture[0].sections[0].id,'204100');
+    assert.equal(StudentComponent.lecture[0].sections[0].name,'IT AND MODERN LIFE');
+    assert.equal(StudentComponent.lecture[0].sections[0].sec_id,'701');
+    assert.equal(StudentComponent.lecture[0].sections[0].no,1);
+    assert.equal(StudentComponent.lecture[0].sections[0].day,'Tu');
+    assert.equal(StudentComponent.lecture[0].sections[0].room,'RB6201');
+    assert.equal(StudentComponent.lecture[0].sections[0].type,'p');
 
-    var no = StudentComponent.lecture[0].sections[0].no;
+  });
 
-    assert.equal(no,1)
-  })
+  /* =====================================================================
+  TEST CASE: Withdraw Courses
+  ===================================================================== */
+
+  it('Function: isAvailable() - 49/50 available return true', () => {
+    // build component
+    const Constructor = Vue.extend(Courses);
+    const CoursesComponent = new Constructor().$mount();
+
+    // set test data
+    CoursesComponent.courses = [
+      {
+        sections: [
+          {
+            seat: 50,
+            enrolled: 49,
+          }
+        ]
+      }
+    ];
+
+    // assert & expected
+    var isAvailable = CoursesComponent.isAvailable(CoursesComponent.courses[0].sections[0]);
+
+    assert.equal(isAvailable,true);
+  });
+
 
 })
