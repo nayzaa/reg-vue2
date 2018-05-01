@@ -70,7 +70,7 @@ describe('Student.vue', () => {
   });
 
   /* =====================================================================
-  TEST CASE: Withdraw Courses
+  TEST CASE: Withdraw Courses Return true
   ===================================================================== */0
 
   it('Function: withdraw return true', () => {
@@ -99,10 +99,45 @@ describe('Student.vue', () => {
     ];
 
     // assert & expected
-    var withdraw = StudentComponent.withdraw(StudentComponent.lecture[0].sections[0]);
+    var withdraw = StudentComponent.withdraw(StudentComponent.lecture[0],StudentComponent.lecture[0].sections[0]);
 
     assert.equal(withdraw,true);
   });
 
+
+  /* =====================================================================
+  TEST CASE: Withdraw Courses Return falsse
+  ===================================================================== */0
+
+  it('Function: withdraw return false', () => {
+    // build component
+    const Constructor = Vue.extend(Student)
+    const StudentComponent = new Constructor().$mount();
+
+    // set test data
+    StudentComponent.lecture = [
+      {
+        sections: [
+          {
+            id:'204100',
+            name:'IT AND MODERN LIFE',
+            sec_id: '701',
+            no: 1,
+            credit_lec: 2,
+            credit_lab: 1,
+            day: 'Tu',
+            time: [ '12.30-14.30' ],
+            room: ['RB6201'],
+            type: 'p',
+          }
+        ]
+      }
+    ];
+
+    // assert & expected
+    var withdraw = StudentComponent.withdraw(StudentComponent.lecture[0],StudentComponent.lecture[0].sections[0]);
+
+    assert.equal(withdraw,false);
+  });
 
 })
